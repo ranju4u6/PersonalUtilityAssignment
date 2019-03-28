@@ -1,14 +1,22 @@
 package com.personal.utility.service.impl;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.personal.utility.constants.ApplicationConstants;
 import com.personal.utility.entity.User;
+import com.personal.utility.entity.UserType;
+import com.personal.utility.model.AddUserModel;
+import com.personal.utility.model.DeleteUserModel;
 import com.personal.utility.model.UserModel;
 import com.personal.utility.model.UserTypeModel;
 import com.personal.utility.repository.UserRepository;
@@ -21,8 +29,8 @@ public class ManageUserServiceImpl implements ManageUserService {
 	@Autowired
 	private UserRepository userRepo;
 	
-//	@Autowired
-//	private UserTypeRepository userTypeRepo;
+	@Autowired
+	private UserTypeRepository userTypeRepo;
 
 	@Override
 	@Transactional
@@ -73,6 +81,63 @@ public class ManageUserServiceImpl implements ManageUserService {
 		userModel.setUserType(userType);
 		
 		return userModel;
+	}
+
+	@Override
+	@Transactional
+	public UserModel addUser(AddUserModel addUserModel) {
+		User user = new User();
+		user.setActive(true);
+		user.setPassword(addUserModel.getUserModel().getPassword());
+		addUserModel.getUserModel().setPassword(ApplicationConstants.EMPTY_STRING);
+		user.setUpdatedBy(addUserModel.getUpdatedBy());
+		user.setUpdatedTime(new Date());
+		UserType userType = userTypeRepo.getOne(addUserModel.getUserModel().getUserType().getUserTypeId());
+		user.setUserType(userType);
+		
+		userRepo.save(user);
+
+		
+		return addUserModel.getUserModel();
+	}
+
+	@Override
+	public boolean deleteUser(DeleteUserModel deleteUserModel) {
+		User user = userRepo.getOne(deleteUserModel.getUserModel().getUserId());
+		user.setActive(false);;
+		
+		userRepo.save(user);
+		return true;
+	}
+
+	@Override
+	public List<UserModel> getAllUsers() {
+		List<UserModel> userList = this.userRepo.findAll().stream().filter(User::isActive).
+				map(user ->{
+					UserModel userModel = new UserModel();
+					userModel.setUserId(user.getId());
+					userModel.setUserName(user.getUserName());
+					
+					UserTypeModel userType = new UserTypeModel();
+					userType.setUserTypeId(user.getUserType().getId());
+					userType.setUserType(user.getUserType().getUserType());
+					userModel.setUserType(userType);
+					return userModel;
+				}).collect(Collectors.toCollection(ArrayList<UserModel>::new));
+		return userList;
+	}
+
+	@Override
+	public List<UserTypeModel> getAllUserTypes() {
+		List<UserTypeModel> userTypeList = userTypeRepo.findAll().stream()
+				.map(userType ->{
+					UserTypeModel userTypeModel = new UserTypeModel();
+					userTypeModel.setUserTypeId(userType.getId());
+					userTypeModel.setUserType(userType.getUserType());
+					return userTypeModel;
+				}).collect(Collectors.toCollection(ArrayList<UserTypeModel>::new));
+		
+		return userTypeList;
 	}
 
 }

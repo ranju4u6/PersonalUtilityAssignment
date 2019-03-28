@@ -11,6 +11,8 @@ public class UserModel {
 	private String userName;
 	private UserTypeModel userType;
 	private String sessionId;
+	private String password;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -34,6 +36,17 @@ public class UserModel {
 	}
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "UserModel [userId=" + userId + ", userName=" + userName + ", userType=" + userType + ", sessionId="
+				+ sessionId + "]";
 	}
 	
 	

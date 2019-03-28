@@ -3,13 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { User } from './user';
+import { AddUserRequest } from './adduser';
+import { DeleteUserRequest } from './deleteuser';
 import { tap } from 'rxjs/operators';
+import { IUserType } from './usertype';
 
 @Injectable({
     providedIn:"root"
 })
 export class UserService{
     private loginUrl: string = "api/userLogin";
+    private addUserUrl: string = "api/addUser";
+    private deleteUserUrl: string = "api/deleteUser";
+    private getAllUsersUrl: string = "api/getAllUsers";
+    private getAllUserTypesUrl: string = "api/getAllUserType";
     private USER_COOKIE: string= "userCookie";
 
     redirectUrl: string;
@@ -24,6 +31,40 @@ export class UserService{
             tap(user=> {
                 console.log(JSON.stringify(user));
                 this.cookieService.set(this.USER_COOKIE, JSON.stringify(user), .125);
+            })
+        );
+    }
+
+    public addUser(addUserRequest: AddUserRequest): Observable<User>{
+        return this.http.post<User>(this.addUserUrl, addUserRequest).pipe(
+            tap(newUser => {
+                console.log("New user added: "+newUser);
+            })
+        );
+    }
+
+    public deleteUser(deleteUserRequest: DeleteUserRequest): Observable<boolean>{
+        return this.http.post<boolean>(this.deleteUserUrl, deleteUserRequest).pipe(
+            tap(status => {
+                console.log("Delete status: "+status);
+            })
+        );
+    }
+
+    public getAllUsers():Observable<User[]>{
+        let param:any={'userId':this.user.userId, 'sessionId':this.user.sessionId};
+        return this.http.get<User[]>(this.getAllUsersUrl,{params: param}).pipe(
+            tap(users => {
+                console.log(JSON.stringify(users));
+            })
+        );
+    }
+
+    public getAllUserTypes():Observable<IUserType[]>{
+        let param:any={'userId':this.user.userId, 'sessionId':this.user.sessionId};
+        return this.http.get<IUserType[]>(this.getAllUserTypesUrl, {params: param}).pipe(
+            tap(userTypes=>{
+                console.log(JSON.stringify(userTypes));
             })
         );
     }
