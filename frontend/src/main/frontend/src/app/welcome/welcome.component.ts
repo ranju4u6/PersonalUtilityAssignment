@@ -3,6 +3,9 @@ import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
 import { User } from '../user/user';
 
+/**
+ * Handles the Top Navigation page
+ */
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',

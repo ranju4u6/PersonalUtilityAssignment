@@ -1,5 +1,8 @@
 import { User } from './user';
 
+/**
+ * UI Model for add user request
+ */
 export class AddUserRequest{
     sessionId: string;
 	updatedBy: string;

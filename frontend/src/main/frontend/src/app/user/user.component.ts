@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from './user';
 import { Router } from '@angular/router';
 
+/**
+ * Component class that handles the user login and logout page
+ */
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -36,7 +40,7 @@ export class UserComponent implements OnInit {
         if(this.userService.redirectUrl){
           this.router.navigateByUrl(this.userService.redirectUrl);
         }else{
-          this.router.navigate(['/welcome/home']);
+          this.router.navigate(['welcome/home']);
         }
       }, errorData => {
         console.log("unable to login");

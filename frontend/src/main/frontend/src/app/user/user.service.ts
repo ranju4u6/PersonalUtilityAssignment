@@ -8,6 +8,9 @@ import { DeleteUserRequest } from './deleteuser';
 import { tap } from 'rxjs/operators';
 import { IUserType } from './usertype';
 
+/**
+ * Service class that handles the user related operations
+ */
 @Injectable({
     providedIn:"root"
 })

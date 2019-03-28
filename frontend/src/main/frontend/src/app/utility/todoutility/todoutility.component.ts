@@ -8,6 +8,11 @@ import { DeleteTask } from './deletetask';
 import { AddNewTask } from './addtask';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+/**
+ * Compenent class that handles the UI screen for user's todo list 
+ */
 
 @Component({
   selector: 'app-todoutility',
@@ -23,19 +28,26 @@ export class TodoutilityComponent implements OnInit {
   constructor(private toDoService: ToDoUtilityService,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
+    //get the logged in user
     this.user = this.userService.getUser();
+
+    //Only USER is allowed here
     if(this.user.userType.userType === 'ADMIN'){
       this.router.navigate(['welcome/home']);
     }
+
+    //add task FormGroup creation
     this.addTaskForm = this.formBuilder.group({
       task: ['', Validators.required],
       targetDate: ['', [Validators.required, dateValidator]],
       userId: this.user.userId
     });
 
+    //get all tasks for logged in user
     this.toDoService.getAllTasks(this.user.userId, this.user.sessionId).subscribe(
       data => {
         this.taskList = data;
@@ -45,6 +57,10 @@ export class TodoutilityComponent implements OnInit {
     );
   }
 
+  /**
+   * Method that hasndles the delete taqsk operation
+   * @param taskId 
+   */
   public deleteTask(taskId: string): void {
     if (!confirm("Do you want to delete this task?")) {
       return;
@@ -64,12 +80,18 @@ export class TodoutilityComponent implements OnInit {
             this.taskList.splice(this.taskList.indexOf(task), 1);
           }
         });
+        this.toastrService.info("Task Deleted");
       }, errorData => {
         console.log("Unable to delete task");
+        this.toastrService.error("Task Deletion Failed");
+        
       }
     );
   }
 
+  /**
+   * Method that handles the add task operation
+   */
   public addTask(): void {
     let newTask = JSON.parse(JSON.stringify(this.addTaskForm.value));
     newTask.i
@@ -77,12 +99,18 @@ export class TodoutilityComponent implements OnInit {
     this.toDoService.addNewTask(new AddNewTask(this.user.sessionId, newTask)).subscribe(
       newTask => {
         this.taskList.push(newTask);
+        this.toastrService.success("Task Added");
       }, errorData => {
         console.log("Unable to add task");
+        this.toastrService.error("Task Add Failed");
       }
     );
   }
 
+  /**
+   * Method that checks if the given date is in past or not
+   * @param targetDate 
+   */
   public isPastDate(targetDate: string): boolean {
     var date = moment(targetDate);
     var now = moment().startOf('day');
@@ -93,6 +121,10 @@ export class TodoutilityComponent implements OnInit {
     }
   }
 
+  /**
+   * Method that compares the given date with today's date
+   * @param targetDate 
+   */
   public isToday(targetDate: string): boolean {
     var date = moment(targetDate).format('YYYY-MM-DD');
     var now = moment().format('YYYY-MM-DD');
@@ -104,7 +136,9 @@ export class TodoutilityComponent implements OnInit {
   }
 
 }
-
+/**
+ * Custom validator for Target date.
+ */
 function dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   if (control && control.value && !moment(control.value, 'YYYY-MM-DD', true).isValid()) {

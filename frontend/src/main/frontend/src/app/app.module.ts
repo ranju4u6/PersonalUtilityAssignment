@@ -14,6 +14,8 @@ import { UtilityModule } from './utility/utility.module';
 import { SettingsComponent } from './settings/settings.component';
 import { DataTableModule } from 'angular-6-datatable';
 import { HomeComponent } from './welcome/home/home.component'
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { HomeComponent } from './welcome/home/home.component'
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    DataTableModule
+    DataTableModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [{provide:APP_BASE_HREF, useValue:"/PersonalUtility"}, CookieService],
   bootstrap: [AppComponent]

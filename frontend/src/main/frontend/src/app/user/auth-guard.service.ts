@@ -2,6 +2,9 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 
+/**
+ * Authentication guard to prevent unautorized access
+ */
 @Injectable({
     providedIn:"root"
 })

@@ -1,5 +1,8 @@
 import { User } from './user';
 
+/**
+ * UI Model for delete user request
+ */
 export class DeleteUserRequest{
     sessionId: string;
 	updatedBy: string;

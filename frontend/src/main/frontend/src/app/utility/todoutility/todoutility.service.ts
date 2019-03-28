@@ -6,6 +6,9 @@ import { AddNewTask } from './addtask';
 import { tap } from 'rxjs/operators';
 import { DeleteTask } from './deletetask';
 
+/**
+ * Service class that handles all operations related to ToDo/Task
+ */
 @Injectable({
     providedIn:"root"
 })
