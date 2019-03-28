@@ -86,7 +86,13 @@ public class ManageUserServiceImpl implements ManageUserService {
 	@Override
 	@Transactional
 	public UserModel addUser(AddUserModel addUserModel) {
-		User user = new User();
+		User user = userRepo.findByUserName(addUserModel.getUserModel().getUserName().trim());
+		if(user != null) {
+			throw new RuntimeException("User Name already taken");
+		}
+		
+		user = new User();
+		user.setUserName(addUserModel.getUserModel().getUserName().trim());
 		user.setActive(true);
 		user.setPassword(addUserModel.getUserModel().getPassword());
 		addUserModel.getUserModel().setPassword(ApplicationConstants.EMPTY_STRING);

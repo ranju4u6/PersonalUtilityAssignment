@@ -1,4 +1,4 @@
 export interface IUserType{
-    id: string;
+    userTypeId: string;
     userType: string;
 }

@@ -4,7 +4,6 @@
       <div class="col-md-7">
         <div id="addBox">
           <form [formGroup]="addUserForm">
-
             <div class="row">
               <div class="col-md-8">
                 <div class="input-group mb-2 mr-sm-2" [ngClass]="{'has-error':(addUserForm.get('userName').touched || addUserForm.get('userName').dirty) && !(addUserForm.get('userName').valid)}">
@@ -29,19 +28,19 @@
                     <div class="input-group-prepend">
                       <div class="input-group-text">Password</div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Password (Reqd)" formControlName="password" id="passwordId">
+                    <input type="password" class="form-control" placeholder="Password (Reqd)" formControlName="password" id="passwordId">
                   </div>
 
                   <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">Confirm Password</div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Confirm Password (Reqd)" formControlName="confirmPassword" id="confirmPasswordId">
+                    <input type="password" class="form-control" placeholder="Confirm Password (Reqd)" formControlName="confirmPassword" id="confirmPasswordId">
                   </div>
                 </div>
                 <span class="help-block" *ngIf="((addUserForm.get('passwordGroup.password').touched || addUserForm.get('passwordGroup.password').dirty) && (addUserForm.get('passwordGroup.password').errors))">
                   <span *ngIf="addUserForm.get('passwordGroup.password').errors.minlength" style="color: red">
-                    Please enter user name
+                    Please enter password
                   </span>
                 </span>
                 <span class="help-block" *ngIf="((addUserForm.get('passwordGroup.confirmPassword').touched || addUserForm.get('passwordGroup.confirmPassword').dirty) && (addUserForm.get('passwordGroup').errors))">
@@ -54,16 +53,16 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text">User Type</div>
                   </div>
-                  <select class="form-control" id="userTypeId" formControlName="userTypeId">
-                    <option *ngFor="let uType of userTypes" value="{{uType.id}}">{{uType.userType}}</option>
+                  <select class="form-control" id="userTypeIdentifier" formControlName="userTypeId">
+                    <option *ngFor="let uType of userTypes" value="{{uType.userTypeId}}">{{uType.userType}}</option>
                   </select>
                 </div>
 
 
               </div>
 
-              <div class="col">
-                <button type="button" class="btn btn-primary" aria-label="Left Align" (click)="addUser()" [disabled]="!addUserForm.valid">
+              <div class="col" id="submitBox">
+                <button type="button" class="btn btn-primary" aria-label="Left Align" (click)="addUser()" [disabled]="!addUserForm.valid"><!--[disabled]="!addUserForm.valid"-->
                   <span class="fa fa-plus" aria-hidden="true"></span>Add
                 </button>
                 <span style="margin: 20px;">
@@ -82,7 +81,37 @@
 
       <div class="col-md-5">
         <div id="deleteBox">
-
+            <table class="table table-striped" [mfData]="userList" #mf="mfDataTable" [mfRowsOnPage]="7">
+                <thead>
+                  <th>
+                    <mfDefaultSorter by="userName">user Name</mfDefaultSorter>
+                  </th>
+                  <th>
+                    User Type
+                  </th>
+                  <th></th>
+                </thead>
+        
+                <tbody>
+                  <tr *ngFor="let item of mf.data">
+                    <td>{{item.userName}}</td>
+                    <td>{{item.userType.userType}}</td>
+                    <td>
+                      <span>
+                        <i class="fa fa-trash" (click)="deleteUser(item.userId)"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+        
+                <tfoot>
+                  <tr>
+                    <td colspan="4">
+                      <mfBootstrapPaginator></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
         </div>
       </div>
 
