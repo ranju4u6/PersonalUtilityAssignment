@@ -82,7 +82,6 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 		ToDo toDo = toDoRepo.getOne(taskId);
 		toDo.setActive(false);
 		toDo.setUpdatedBy(updatedUser);
-		updateTask(null);
 		
 		toDoRepo.save(toDo);
 		

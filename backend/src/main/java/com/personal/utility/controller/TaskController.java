@@ -82,6 +82,7 @@ public class TaskController {
 			log.info("deleted task: {}", deleteTaskModel);
 			return new ResponseEntity<Boolean>(status, HttpStatus.OK);
 		}catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
