@@ -1,7 +1,8 @@
 package com.personal.utility.model;
 
 /**
- * Represents the ADDUser request body.
+ * UI Model for deleting a user.
+ * It should be in sync with the data coming from FE
  * @author renjith
  *
  */

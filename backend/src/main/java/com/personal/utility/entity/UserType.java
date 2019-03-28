@@ -13,8 +13,9 @@ import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Parameter;
 
+
 /**
- * Entity class that represents the user types
+ * JPA Entity representing TBL_USER_TYPE
  * @author renjith
  *
  */

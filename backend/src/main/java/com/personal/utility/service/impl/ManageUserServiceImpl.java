@@ -23,6 +23,12 @@ import com.personal.utility.repository.UserRepository;
 import com.personal.utility.repository.UserTypeRepository;
 import com.personal.utility.service.ManageUserService;
 
+
+/**
+ * Implementation class for ManageUserService
+ * @author renjith
+ *
+ */
 @Service
 public class ManageUserServiceImpl implements ManageUserService {
 	
@@ -40,6 +46,7 @@ public class ManageUserServiceImpl implements ManageUserService {
 		String decodedPassword = new String(Base64.getDecoder().decode(password));
 		String storedPassword = new String(Base64.getDecoder().decode(user.getPassword()));
 		
+		//only active users are selected
 		if(user !=null && decodedPassword.equals(storedPassword) && user.isActive()) {
 			setSessionId(user);
 			
@@ -59,6 +66,10 @@ public class ManageUserServiceImpl implements ManageUserService {
 		return null;
 	}
 	
+	/**
+	 * Replace session id on each login
+	 * @param user
+	 */
 	@Transactional(propagation=Propagation.MANDATORY)
 	private void setSessionId(User user) {
 		String sessionId = UUID.randomUUID().toString();

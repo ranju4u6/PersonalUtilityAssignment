@@ -1,7 +1,7 @@
 package com.personal.utility.model;
 
 /**
- * Model class that represents user
+ * UI Model class that represents user
  * @author renjith
  *
  */

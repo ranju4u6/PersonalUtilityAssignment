@@ -20,6 +20,12 @@ import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
+/**
+ * JPA Entity representing TB_TODO
+ * @author renjith
+ *
+ */
+
 @Entity
 @Table(name = "TBL_TODO")
 @NamedQueries({ @NamedQuery(name = "Todo_Row_Count", query = "select count(*) from ToDo") })

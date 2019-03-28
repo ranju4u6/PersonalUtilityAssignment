@@ -1,5 +1,11 @@
 package com.personal.utility.model;
 
+/**
+ * UI Model representing the task.
+ * It should be in sync with the data coming from FE
+ * @author renjith
+ *
+ */
 public class ToDoModel {
 	
 	private String id;

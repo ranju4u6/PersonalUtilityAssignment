@@ -18,6 +18,12 @@ import com.personal.utility.repository.ToDoRepository;
 import com.personal.utility.repository.UserRepository;
 import com.personal.utility.service.ManageToDoService;
 
+/**
+ * Implementation class for ManageToDoService
+ * @author renjith
+ *
+ */
+
 @Service
 public class ManageToDoServiceImpl implements ManageToDoService {
 	
@@ -39,6 +45,8 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 		try {
 			toDo.setTargetDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDoModel.getTargetDate()));
 		} catch (ParseException e) {
+			//rare case as we are validating in UI.
+			e.printStackTrace();
 		}
 		
 		toDoRepo.save(toDo);
@@ -53,7 +61,7 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 	@Transactional
 	public List<ToDoModel> getAllTaskForUser(String userId) {
 		User user = userRepo.getOne(userId);
-		
+		//get the list of active tasks and sort is by target date asc 
 		List<ToDoModel> toDoList = toDoRepo.findByUserId(user).stream().filter(ToDo::isActive).map((toDo)->{
 			ToDoModel toDoModel = new ToDoModel();
 			toDoModel.setId(toDo.getId());
@@ -74,6 +82,7 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 		ToDo toDo = toDoRepo.getOne(taskId);
 		toDo.setActive(false);
 		toDo.setUpdatedBy(updatedUser);
+		updateTask(null);
 		
 		toDoRepo.save(toDo);
 		
@@ -83,16 +92,17 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 	@Override
 	@Transactional
 	public List<ToDoModel> updateTask(List<ToDoModel> toDoList) {
+		throw new UnsupportedOperationException("method is not supported");
 		
-		for(ToDoModel toDoModel: toDoList) {
-			ToDo toDo = toDoRepo.getOne(toDoModel.getId());
-			toDo.setTask(toDoModel.getTask());
-			toDo.setTargetDate(new Date());//for the time being
-			
-			toDoRepo.save(toDo);
-		}
-		
-		return toDoList;
+//		for(ToDoModel toDoModel: toDoList) {
+//			ToDo toDo = toDoRepo.getOne(toDoModel.getId());
+//			toDo.setTask(toDoModel.getTask());
+//			toDo.setTargetDate(new Date());//for the time being
+//			
+//			toDoRepo.save(toDo);
+//		}
+//		
+//		return toDoList;
 	}
 
 }

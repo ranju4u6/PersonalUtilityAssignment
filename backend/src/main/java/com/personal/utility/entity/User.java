@@ -21,7 +21,7 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
 /**
- * Entity class that represents the user
+ * JPA Entity representing TBL_USER
  * @author renjith
  *
  */

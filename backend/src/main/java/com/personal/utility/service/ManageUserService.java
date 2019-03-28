@@ -44,7 +44,7 @@ public interface ManageUserService {
 	boolean deleteUser(DeleteUserModel deleteUserModel);
 	
 	/**
-	 * Retrieve all the users
+	 * Retrieve all Active users
 	 * @return
 	 */
 	List<UserModel> getAllUsers();

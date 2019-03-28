@@ -31,10 +31,13 @@ public interface ManageToDoService {
 	 */
 	public boolean deleteTask(String taskId, String updatedUser);
 	
+	
 	/**
-	 * Update all tasks for a user
+	 * 
+	 * @param toDoList
 	 * @return
+	 * @throws UnsupportedOperationException
 	 */
-	public List<ToDoModel> updateTask(List<ToDoModel> toDoList);
+	public List<ToDoModel> updateTask(List<ToDoModel> toDoList)throws UnsupportedOperationException;
 	
 }

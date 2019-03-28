@@ -1,5 +1,10 @@
 package com.personal.utility.model;
-
+/**
+ * UI Model for deleting a task.
+ * It should be in sync with the data coming from FE
+ * @author renjith
+ *
+ */
 public class DeleteTaskModel {
 	
 	private String sessionId;
