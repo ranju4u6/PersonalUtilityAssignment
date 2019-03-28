@@ -10,3 +10,11 @@
 #manageWindow #addWindow{
     margin-top: 100px;
 }
+.past {
+    color: red;
+}
+
+.now {
+    color: green;
+    font-weight: bold;
+}

@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
         if(this.userService.redirectUrl){
           this.router.navigateByUrl(this.userService.redirectUrl);
         }else{
-          this.router.navigate(['/welcome']);
+          this.router.navigate(['/welcome/home']);
         }
       }, errorData => {
         console.log("unable to login");

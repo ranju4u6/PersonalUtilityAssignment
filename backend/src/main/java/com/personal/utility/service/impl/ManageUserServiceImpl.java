@@ -102,6 +102,8 @@ public class ManageUserServiceImpl implements ManageUserService {
 		user.setUserType(userType);
 		
 		userRepo.save(user);
+		
+		addUserModel.getUserModel().setUserId(user.getId());
 
 		
 		return addUserModel.getUserModel();

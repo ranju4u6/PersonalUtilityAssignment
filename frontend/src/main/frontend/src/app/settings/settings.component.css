@@ -24,7 +24,7 @@
 .input-group>.input-group-prepend{
     flex: 0 030%;
 }
-.input-group>.input-group-text{
+.input-group .input-group-text{
     width: 100%;
     font-size: 11px;
 }

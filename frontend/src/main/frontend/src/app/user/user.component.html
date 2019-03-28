@@ -27,14 +27,14 @@
 
                 <div class="form-group" [ngClass]="{'has-error': (userLoginForm.get('password').touched 
                 || userLoginForm.get('password').dirty) && !userLoginForm.get('password').valid}">
-                    <label class="col-md-2 control-label" for="password">Password</label>
+                    <label class="col-md-4 control-label" for="password">Password</label>
 
                     <div class="col-md-8">
                         <input class="form-control" id="passwordId" type="password" placeholder="password (Reqd)" formControlName="password">
                         <span class="help-block" *ngIf="(userLoginForm.get('password').touched 
                         || userLoginForm.get('password').dirty) && userLoginForm.get('password').errors">
                         <span *ngIf="userLoginForm.get('password').errors.required">
-                            Please enter user name
+                            Please enter password
                         </span>
                     </span>
                     </div>

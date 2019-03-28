@@ -37,7 +37,7 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 		toDo.setUpdatedBy(toDoModel.getUserId());
 		toDo.setUpdatedTime(new Date());
 		try {
-			toDo.setTargetDate(new SimpleDateFormat("YYYY-MM-DD").parse(toDoModel.getTargetDate()));
+			toDo.setTargetDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDoModel.getTargetDate()));
 		} catch (ParseException e) {
 		}
 		
@@ -62,7 +62,8 @@ public class ManageToDoServiceImpl implements ManageToDoService {
 			toDoModel.setUserId(userId);
 			
 			return toDoModel;
-		}).collect(Collectors.toCollection(ArrayList<ToDoModel>::new));
+		}).sorted((o1,o2)->o1.getTargetDate().compareTo(o2.getTargetDate()))
+				.collect(Collectors.toCollection(ArrayList<ToDoModel>::new));
 		
 		return toDoList;
 	}

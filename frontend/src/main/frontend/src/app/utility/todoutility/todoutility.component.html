@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="user.userType.userType === 'USER'">
   <div class="row" id="manageWindow">
 
     <div class="col-md-6" id="addWindow">
@@ -52,7 +52,9 @@
 
         <tbody>
           <tr *ngFor="let item of mf.data">
-            <td>{{item.task}}</td>
+            <td 
+            [ngClass]="{'past': isPastDate(item.targetDate) === true,
+            'now': isToday(item.targetDate) === true}">{{item.task}}</td>
             <td>{{item.targetDate}}</td>
             <td>
               <span>

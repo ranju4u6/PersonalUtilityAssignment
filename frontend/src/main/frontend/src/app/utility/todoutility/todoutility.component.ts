@@ -7,6 +7,7 @@ import { ITodo } from './todo';
 import { DeleteTask } from './deletetask';
 import { AddNewTask } from './addtask';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todoutility',
@@ -14,63 +15,67 @@ import * as moment from 'moment';
   styleUrls: ['./todoutility.component.css']
 })
 export class TodoutilityComponent implements OnInit {
-  
+
   private user: User;
   public addTaskForm: FormGroup;
   public taskList: ITodo[];
 
-  constructor(private toDoService: ToDoUtilityService, 
+  constructor(private toDoService: ToDoUtilityService,
     private userService: UserService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private router: Router) { }
 
   ngOnInit() {
     this.user = this.userService.getUser();
+    if(this.user.userType.userType === 'ADMIN'){
+      this.router.navigate(['welcome/home']);
+    }
     this.addTaskForm = this.formBuilder.group({
-      task:['', Validators.required],
-      targetDate:['', [Validators.required, dateValidator]],
+      task: ['', Validators.required],
+      targetDate: ['', [Validators.required, dateValidator]],
       userId: this.user.userId
     });
 
     this.toDoService.getAllTasks(this.user.userId, this.user.sessionId).subscribe(
-      data=>{
+      data => {
         this.taskList = data;
-      }, errorData=>{
+      }, errorData => {
         console.log("Failed to get the tasks");
       }
     );
   }
 
-  public deleteTask(taskId: string): void{
-    if(!confirm("Do you want to delete this task?")){
+  public deleteTask(taskId: string): void {
+    if (!confirm("Do you want to delete this task?")) {
       return;
     }
 
     let taskToDelete;
     this.taskList.forEach(task => {
-      if(task.id === taskId){
+      if (task.id === taskId) {
         taskToDelete = task;
       }
     });
 
     this.toDoService.deleteTask(new DeleteTask(this.user.sessionId, taskToDelete)).subscribe(
-      status=>{
+      status => {
         this.taskList.forEach(task => {
-          if(task.id === taskId){
+          if (task.id === taskId) {
             this.taskList.splice(this.taskList.indexOf(task), 1);
           }
         });
-      }, errorData=>{
+      }, errorData => {
         console.log("Unable to delete task");
       }
     );
   }
 
-  public addTask(): void{
+  public addTask(): void {
     let newTask = JSON.parse(JSON.stringify(this.addTaskForm.value));
     newTask.i
 
     this.toDoService.addNewTask(new AddNewTask(this.user.sessionId, newTask)).subscribe(
-      newTask=>{
+      newTask => {
         this.taskList.push(newTask);
       }, errorData => {
         console.log("Unable to add task");
@@ -78,12 +83,29 @@ export class TodoutilityComponent implements OnInit {
     );
   }
 
+  public isPastDate(targetDate: string): boolean {
+    var date = moment(targetDate);
+    var now = moment().startOf('day');
+    if (now > date) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public isToday(targetDate: string): boolean {
+    var date = moment(targetDate).format('YYYY-MM-DD');
+    var now = moment().format('YYYY-MM-DD');
+    if (now === date) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
 
-function dateValidator(control: AbstractControl): {[key:string]:boolean}|null{
-  // if(!(control && control.value)){
-  //   return { 'dateVaidator': true };
-  // }
+function dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   if (control && control.value && !moment(control.value, 'YYYY-MM-DD', true).isValid()) {
     return { 'dateVaidator': true };

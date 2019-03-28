@@ -12,14 +12,16 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UtilityModule } from './utility/utility.module';
 import { SettingsComponent } from './settings/settings.component';
-import { DataTableModule } from 'angular-6-datatable'
+import { DataTableModule } from 'angular-6-datatable';
+import { HomeComponent } from './welcome/home/home.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     WelcomeComponent,
-    SettingsComponent
+    SettingsComponent,
+    HomeComponent
   ],
   imports: [
     UtilityModule,

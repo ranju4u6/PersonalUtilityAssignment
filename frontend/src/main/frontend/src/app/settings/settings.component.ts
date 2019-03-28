@@ -5,6 +5,7 @@ import { IUserType } from '../user/usertype';
 import { UserService } from '../user/user.service';
 import { AddUserRequest } from '../user/adduser';
 import { DeleteUserRequest } from '../user/deleteuser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,9 @@ export class SettingsComponent implements OnInit {
   public userTypes: IUserType[];
   private user; User;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder,
+     private userService: UserService,
+     private router: Router) { }
 
   ngOnInit() {
     this.addUserForm = this.formBuilder.group({
@@ -31,6 +34,10 @@ export class SettingsComponent implements OnInit {
     });
 
     this.user = this.userService.getUser();
+
+    if(this.user.userType.userType === 'USER'){
+      this.router.navigate(['welcome/home']);
+    }
 
     this.userService.getAllUsers().subscribe(
       data => {
@@ -62,7 +69,8 @@ export class SettingsComponent implements OnInit {
     this.userService.addUser(new AddUserRequest(this.user.sessionId, this.user.userId, newUser)).subscribe(
       data => {
         console.log("new used added");
-        this.userList.push(newUser);
+        this.userList.push(data);
+        this.addUserForm.reset();
       }, errorData => {
 
       }
