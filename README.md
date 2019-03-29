@@ -56,7 +56,8 @@ server.port = 'new-port-number'.
 <q> git clone https://github.com/ranju4u6/PersonalUtilityAssignment.git </q><br><br> </li>
 <li>Issue command <b>mvn clean install</b> to build the project.<br><br>
 This command will clean the target folder and install new deployable jar file inside backend/target folder. <br> Before creating the jar file, it will trigger the <span style="color:green"><b>Cucumber</b></span> based integration test cases. <br><br>
-<q><span style="color:green"><b>Cucumber</b></span> utilizes selenium internally and it requires a selenium Chrome driver to be placed in the src/test/resources folder. By default it has a chrome driver for linux 64-bit machines for chrome version 69. Make sure that you are using the one that matches your system specification.</q></li>
+<q><span style="color:green"><b>Cucumber</b></span> utilizes selenium internally and it requires a selenium Chrome driver to be placed in the src/test/resources folder. By default it has a chrome driver for linux 64-bit machines for chrome version 69. Make sure that you are using the one that matches your system specification.</q></li><br><br>
+<li>Finally, import it as a Maven project to Eclipse by selecting the root POM file</li>
 </ol>
 
 <h3>FAQ</h3>
