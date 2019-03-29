@@ -47,7 +47,7 @@ Software enthusiasts can contribute to the application development. Following ar
      |       DATABASE [H2-DB (Embedded Database)]         |
      |----------------------------------------------------|  
      
-Application employs <b>Angular 6</b> and <b>Twitter Bootstrap 4</b> for the development of User Interface. Angular makes REST requests to the back end which is handled by a REST api supported by <b>Spring REST</b>. Data is stored in an Embedded <a href="http://www.h2database.com/">H2-Database</a>, which is accessed through a combination of <b>Spring DATA</b> layer and <b>Hibernate [JPA]</b>. The entire application is bundled using <b>Spring Boot</b>. Spring Boot comes us with an <b>Embedded Tomcat</b> web serrver, where it deploys the application. By default the application is deployed to the 8080 port of Tomcat. If 8080 port is not accessible in your machine, feel free to change it by making the following entry in the Spring Boot's application.properties file. <br><br>
+Application employs <b>Angular 6</b> and <b>Twitter Bootstrap 4</b> for the development of User Interface. Angular makes REST requests to the back end which is handled by a REST api supported by <b>Spring REST</b>. Data is stored in an Embedded <a href="http://www.h2database.com/">H2-Database</a>, which is accessed through a combination of <b>Spring DATA</b> layer and <b>Hibernate [JPA]</b>. The entire application is bundled using <b>Spring Boot</b>. Spring Boot comes us with an <b>Embedded Tomcat</b> web server, where it deploys the application. By default the application is hosted to the 8080 port of Tomcat. If 8080 port is not accessible in your machine, feel free to change it by making the following entry in the Spring Boot's application.properties file. <br><br>
 server.port = 'new-port-number'.
      
 <h3>How to build?</h3> 
@@ -56,15 +56,15 @@ server.port = 'new-port-number'.
 <q> git clone https://github.com/ranju4u6/PersonalUtilityAssignment.git </q><br><br> </li>
 <li>Issue command <b>mvn clean install</b> to build the project.<br><br>
 This command will clean the target folder and install new deployable jar file inside backend/target folder. <br> Before creating the jar file, it will trigger the <span style="color:green"><b>Cucumber</b></span> based integration test cases. <br><br>
-<q><span style="color:green"><b>Cucumber</b></span> utilizes selenium internally and it requires a selenium Chrome driver to be placed in the src/test/resources folder. By default it has a chrome driver for linux 64-bit machines for chrome version 69. Make sure that you are using the one that matches your system specification.</q></li><br><br>
-<li>Finally, import it as a Maven project to Eclipse by selecting the root POM file</li>
+<q><span style="color:green"><b>Cucumber</b></span> utilizes Selenium internally and it requires a selenium Chrome driver to be placed in the src/test/resources folder. By default it has a Chrome driver for linux 64-bit machines for Chrome version 69. Make sure that you are using the one that matches your system specification.</q></li><br>
+<li>Finally, Import it as a Maven project to Eclipse by selecting the root POM file</li>
 </ol>
 
 <h3>FAQ</h3>
 <ol>
 
 <li>How to recover from application failure due to database related issues while deployment?<br><br>
-<q>Hibernate is asked to updated the existing schema on deployment. So it possible to fail in the initial deployment. This can be corrected by asking the Hibernate to create tables by updating the following entry in application.properties with a value 'CREATE' instead of 'UPDATE' given there.<br><br>
+<q>Hibernate is asked to update the existing schema on deployment. So it possible to fail in the initial deployment. This can be corrected by asking the Hibernate to create tables by updating the following entry in application.properties with a value 'CREATE' instead of 'UPDATE' given there.<br><br>
 spring.jpa.hibernate.ddl-auto = update <br><br>
 And it is important to revert it back to 'UPDATE' before next deployment, as 'CREATE' will wipe out all the data from the tables.
 </q> 
